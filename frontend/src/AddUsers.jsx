@@ -3,6 +3,7 @@ import { Button } from '@mui/material'
 import React, { useRef, useState } from 'react'
 import axios from "axios";
 import { Bounce, ToastContainer, toast } from 'react-toastify';
+import Swal from 'sweetalert2';
 
 export default function AddUsers() {
     const formRef = useRef();
@@ -22,17 +23,11 @@ export default function AddUsers() {
 
             const response = await axios.post('http://localhost:8000/api/addUser', formData);
 
-            toast.success(response.data.message, {
-                position: "top-center",
-                autoClose: 4000,
-                hideProgressBar: true,
-                closeOnClick: false,
-                pauseOnHover: true,
-                draggable: true,
-                progress: undefined,
-                theme: "light",
-                transition: Bounce
-            })
+            Swal.fire({
+                title: response.data.message,
+                icon: "success",
+                draggable: true
+              });
             formRef.current.reset();
         }
         catch (error) {
